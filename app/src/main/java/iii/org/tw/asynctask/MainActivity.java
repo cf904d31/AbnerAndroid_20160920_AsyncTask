@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         showText = (TextView) findViewById(R.id.showText);
     }
 
-    private class MyTask extends AsyncTask<String,Integer,Void> {
+    private class MyTask extends AsyncTask<String,Object,Void> {
         @Override
         protected Void doInBackground(String... params) {
             Log.d("Abner","doInBackground");
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             for (String name : params) {
                 i++;
                 Log.d("Abner","Hello ,"+name);
-                publishProgress(i,i+100,i+1000);
+                publishProgress(i,name);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
+        protected void onProgressUpdate(Object... values) {
             super.onProgressUpdate(values);
             Log.d("Abner","onProgressUpdate");
-            showText.setText(values[0] + ":" + values[1] + ":" +values[2]);
+            showText.setText(values[0] + ":" + values[1]);
         }
 
         @Override
