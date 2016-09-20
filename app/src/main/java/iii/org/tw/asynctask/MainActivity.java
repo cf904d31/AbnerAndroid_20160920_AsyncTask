@@ -22,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             Log.d("Abner","doInBackground");
-            int i=0;
+            int i=0; boolean isCancel = false;
             for (String name : params) {
+                if (isCancelled()) {
+                    isCancel = true;
+                    break;
+                }
                 i++;
                 Log.d("Abner","Hello ,"+name);
                 publishProgress(i,name);
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            return "Game Over";
+            return isCancel?"Cancel!":"Game Over";
         }
 
         @Override
