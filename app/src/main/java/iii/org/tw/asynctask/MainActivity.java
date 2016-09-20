@@ -18,10 +18,21 @@ public class MainActivity extends AppCompatActivity {
         showText = (TextView) findViewById(R.id.showText);
     }
 
-    private class MyTask extends AsyncTask<Void,Void,Void> {
+    private class MyTask extends AsyncTask<String,Integer,Void> {
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Void doInBackground(String... params) {
             Log.d("Abner","doInBackground");
+            int i=0;
+            for (String name : params) {
+                i++;
+                Log.d("Abner","Hello ,"+name);
+                publishProgress(i,i+100,i+1000);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             return null;
         }
 
@@ -38,9 +49,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Void... values) {
+        protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
             Log.d("Abner","onProgressUpdate");
+            showText.setText(values[0] + ":" + values[1] + ":" +values[2]);
         }
 
         @Override
@@ -52,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void async(View v) {
         mt1 = new MyTask();
-        mt1.execute();
+        mt1.execute("Mary","Jack","Tom","Eric","Jerry","Abner");
     }
 
     public void stop(View v) {
